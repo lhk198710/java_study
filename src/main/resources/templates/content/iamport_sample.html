@@ -1,0 +1,71 @@
+<html>
+<head>
+    <title></title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.8.js"></script>
+</head>
+<body>
+<button onClick="requestPay()">결제하기</button>
+<script>
+    var IMP = window.IMP; // 생략 가능
+    IMP.init("imp95481701"); // 예: imp00000000 // 가맹점 식별코드
+    // REST API key : 6893505207838652(결제 확인, 취소 등에서 사용)
+    // REST API secret : bbb00b44105bbeab755143141f31874d87cdf1ef78d34f0b921207092c878e62f23c5b06ea5c15c0(결제 확인, 취소 등에서 사용)
+    function requestPay() {
+        // IMP.request_pay(param, callback) 결제창 호출
+        IMP.request_pay({ // param
+            pg: "html5_inicis",
+            pay_method: "vbank",
+            //pg: "danal",
+            //pay_method: "phone",
+            merchant_uid: "ORD20180131-0000087",
+            name: "노르웨이 회전 의자",
+            amount: 1300,
+            buyer_email: "gildong@gmail.com",
+            buyer_name: "홍길동",
+            buyer_tel: "010-4242-4242",
+            buyer_addr: "서울특별시 강남구 신사동",
+            buyer_postcode: "01181",
+            display: {
+                card_quota: [2, 3, 4, 5, 6]
+            },
+            m_redirect_url: "https://a861-112-216-104-34.jp.ngrok.io/view/v1/payments/iamportRedirect",
+            notice_url: "https://a861-112-216-104-34.jp.ngrok.io/api/v1/payments/notification"
+        }, function (rsp) { // callback
+            console.log(rsp);
+
+            window.location.href = "http://localhost:18088/view/v1/payments/redirect?imp_uid=" + rsp.imp_uid + "&merchant_uid=" + rsp.merchant_uid + "&imp_success=" + rsp.success + "&error_msg=" + rsp.error_msg;
+
+            if (rsp.success) {
+                // 결제 성공 시 로직
+                const req = {
+                    imp_uid: rsp.imp_uid,
+                    merchant_uid: rsp.merchant_uid,
+                    imp_success: rsp.success
+                };
+
+                const jsonReq = JSON.stringify(req);
+
+                // 무조건 리다이렉트하게 하자
+                // 리다이렉트 된 페이지에서 결제 API 호출해서 결제 완료 처리 할 것
+
+                $.ajax({
+                    type: "GET",
+                    url: "http://localhost:18088/api/v1/payments/pay/" + req.imp_uid + "?imp_uid=" + req.imp_uid + "&merchant_uid=" + req.merchant_uid + "&imp_success=" + req.imp_success,
+                    contentType: "application/json; charset=utf-8",
+                    success: function (result) {
+                        console.log(result);
+                    },
+                    error: function (request, status, error) {
+                        console.log(request, status, error);
+                    }
+                });
+            } else {
+                // 결제 실패 시 로직,
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

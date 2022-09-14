@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>아임포트 이동 페이지</title>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+</head>
+<body>
+아임포트 이동 페이지<br />
+- 모바일 환경에서 일부 PG사의 경우 callback을 호출하지 않고 클라이언트에서 지정한 이동 페이지로 페이지 이동을 시킨다.<br />
+- 이동 된 페이지에서 결제 완료 진행을 해야 한다. (imp_uid, merchant_uid, success, error_msg를 GET 방식으로 전달 받음)<br />
+- GET 방식을 통해 전달 받은 데이터를 payment-api로 전달, api에서는 결제 완료 진행을 한다.<br />
+<script>
+    function getQueryStringObject() {
+        var a = window.location.search.substr(1).split('&');
+        if (a == "") return {};
+        var b = {};
+        for (var i = 0; i < a.length; ++i) {
+            var p = a[i].split('=', 2);
+            if (p.length == 1)
+                b[p[0]] = "";
+            else
+                b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+        }
+        return b;
+    }
+
+    const iamportData = getQueryStringObject();
+    const imp_uid = iamportData.imp_uid;
+    const merchant_uid = iamportData.merchant_uid;
+    const imp_success = iamportData.imp_success;
+    const error_msg = iamportData.error_msg;
+
+    $.ajax({
+       type: "GET",
+        url: "http://localhost:18088/api/v1/payments/pay/" + imp_uid + "?imp_uid=" + imp_uid + "&merchant_uid=" + merchant_uid + "&imp_success=" + imp_success + "&error_msg=" + error_msg,
+        success: function(result) {
+           console.log(result);
+        },
+        error: function(request, status, error) {
+            console.log(request, status, error);
+        }
+    });
+
+</script>
+</body>
+</html>
