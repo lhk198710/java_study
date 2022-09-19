@@ -2,9 +2,9 @@
 자바 코드 기록용<br/>
 개인적으로 기억하기 위한 코드 및 폐기된 프로젝트의 일부분을 관리하기 위한 공간입니다.
 
-목차<br/>
-<h1>API</h1>
-<img src="https://img.shields.io/badge/api-FFCA28?style=flat-square&logo=java&logoColor=white"/> <br/>
+<h1>목차</h1>
+<h2>API</h2>
+<img src="https://img.shields.io/badge/api-FFCA28?style=flat-square&logo=java&logoColor=white"/>
 <div>폐기된 프로젝트 중 향후 재사용 될 가능성이 있는 코드들을 기록하는 공간.</div><br/>
 
 <img src="https://img.shields.io/badge/community.board-FFCA28?style=flat-square&logo=java&logoColor=white"/> <br/>
@@ -22,8 +22,8 @@
 <img src="https://img.shields.io/badge/utils-FFCA28?style=flat-square&logo=java&logoColor=white"/> <br/>
 <div>API 에서 공통으로 사용하는 유틸성 패키지</div><br/>
 
-<h1>기록용 코드</h1>
-<img src="https://img.shields.io/badge/simple-FFCA28?style=flat-square&logo=java&logoColor=white"/> <br/>
+<h2>기록용 코드</h2>
+<img src="https://img.shields.io/badge/simple-FFCA28?style=flat-square&logo=java&logoColor=white"/>
 <div>스터디 등을 목적으로 간단한 코드 기록용</div><br/>
 
 <img src="https://img.shields.io/badge/code-FFCA28?style=flat-square&logo=java&logoColor=white"/> <br/>
