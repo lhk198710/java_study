@@ -1,6 +1,6 @@
 package com.example.study.api.type;
 
-import com.lf.c.util.collection.Streams;
+import com.example.study.api.utils.Streams;
 
 import java.util.List;
 import java.util.function.Function;
