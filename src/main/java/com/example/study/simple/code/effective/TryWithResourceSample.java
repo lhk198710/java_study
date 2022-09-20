@@ -1,7 +1,10 @@
-package com.example.study.simple.code.trywithresource;
+package com.example.study.simple.code.effective;
 
 import java.io.*;
 
+/**
+ * 아이템 9. try-finally 보다 try-with-resouces를 사용하라.
+ */
 public class TryWithResourceSample {
     private static final int BUFFER_SIZEW = 8 * 1024;
 
