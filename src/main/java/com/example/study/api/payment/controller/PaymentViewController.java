@@ -44,12 +44,13 @@ public class PaymentViewController {
     }
 
     @RequestMapping(value = "/redirect", method = RequestMethod.GET)
-    public String viewMobileRedirect(@RequestParam(value="imp_uid") String imp_uid,
+    public String viewMobileRedirect(HttpServletRequest httpServletRequest,
+                                     @RequestParam(value="imp_uid") String imp_uid,
                                      @RequestParam(value="merchant_uid") String merchant_uid,
                                      @RequestParam(value="imp_success") boolean imp_success,
                                      @RequestParam(value="error_msg", required = false) String error_msg) {
-        // 웹 데이터 저장해야하나...
-        // 로그성
+        String reqUri = httpServletRequest.getRequestURI();
+        LOGGER.info("reqUri : {}, imp_uid : {}, merchant_uid : {}, imp_success : {}, error_msg : {}", reqUri, imp_uid, merchant_uid, imp_success, error_msg);
         return "content/iamport_redirect";
     }
 }

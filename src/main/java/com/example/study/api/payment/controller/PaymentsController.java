@@ -1,5 +1,6 @@
 package com.example.study.api.payment.controller;
 
+import com.example.study.api.payment.model.response.IamportPayResponse;
 import com.example.study.api.result.Result;
 import com.example.study.api.payment.entity.LfPayData;
 import com.example.study.api.payment.model.request.IamportPayRequest;
@@ -43,12 +44,9 @@ public class PaymentsController {
     @ApiIgnore
     @PostMapping("/auth/{orderId}")
     @Operation(summary="결제 창 호출 시 필요 데이터 응답 API", description="결제 창 호출 시 필요 데이터 응답 API")
-    public void authPayments(@PathVariable String orderId, @RequestBody IamportPayRequest iamportPayRequest) throws Exception {
+    public Result<IamportPayResponse> authPayments(@PathVariable String orderId, @RequestBody IamportPayRequest iamportPayRequest) throws Exception {
         LOGGER.info("orderId : {}, iamportPayRequest : {}", orderId, iamportPayRequest);
-        // 직접적인 주문 아이디 노출이 보안 상 우려가 있을 수도 있음.
-        // 임시 아이디를 전달 받고 해당 아이디로 미리 저장 된 결제 정보(PG, 결제 수단, 금액, 할부 등 조회 필요)
-        // 논의된 내용이 없으니 일단은 orderId로 명할 것
-        // 주문 정보 체크 후 아임포트 데이터 내려줄 것
+        return Result.success(paymentService.getPaymentAuthViewResponse(orderId, iamportPayRequest));
     }
 
     @GetMapping("/pay/{orderId}")
