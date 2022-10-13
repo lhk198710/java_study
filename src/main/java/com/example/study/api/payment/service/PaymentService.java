@@ -3,7 +3,6 @@ package com.example.study.api.payment.service;
 import com.example.study.api.payment.common.constant.PgType;
 import com.example.study.api.payment.common.exception.ErrorMessages;
 import com.example.study.api.payment.common.exception.LFException;
-import com.example.study.api.payment.common.exception.RollbackException;
 import com.example.study.api.payment.entity.PgInfo;
 import com.example.study.api.payment.entity.PgPayData;
 import com.example.study.api.payment.entity.PgPayMethod;
@@ -14,7 +13,6 @@ import com.example.study.api.payment.model.response.IamportPayResponse;
 import com.example.study.api.payment.model.response.PaymentMethodViewResponse;
 import com.example.study.api.payment.model.response.PaymentPgMethodViewResponse;
 import com.example.study.api.payment.model.response.PaymentResponse;
-import com.example.study.api.payment.common.constant.IamportStatusConstant;
 import com.example.study.api.payment.entity.LfPayData;
 import com.example.study.api.payment.iamport.model.AccessToken;
 import com.example.study.api.payment.iamport.model.Payment;
@@ -66,7 +64,7 @@ public class PaymentService {
             paymentMethodViewResponse = new PaymentMethodViewResponse(paymentMethodViewRespons);
 
         } catch (Exception e) {
-            throw new LFException(e, "");
+            throw new IllegalStateException(ErrorMessages.CODE_1.getErrorMessage());
         }
 
         return paymentMethodViewResponse;
@@ -124,7 +122,7 @@ public class PaymentService {
         int minAmount = pgPayMethod.minAmount();
         int maxAmount = pgPayMethod.maxAmount();
         if(minAmount > amount || maxAmount < amount) {
-            throw new LFException(ErrorMessages.CODE_3604);
+            throw new IllegalStateException(ErrorMessages.CODE_3604.getErrorMessage());
         }
     }
 
@@ -136,7 +134,7 @@ public class PaymentService {
         PgInfo pgInfo = pgInfoRepository.findTopByPgKeyAndAvailable(pg, 1);
 
         if(pgInfo == null) {
-            throw new LFException(ErrorMessages.CODE_3514);
+            throw new IllegalStateException(ErrorMessages.CODE_3514.getErrorMessage());
         }
     }
 
@@ -150,7 +148,7 @@ public class PaymentService {
         PgPayMethod pgPayMethod = pgPayMethodRepository.findTopByPayMethod(payMethod);
 
         if(pgPayMethod == null) {
-            throw new LFException(ErrorMessages.CODE_3511);
+            throw new IllegalStateException(ErrorMessages.CODE_3511.getErrorMessage());
         }
 
         PgType pgType = PgType.findByIamPortPgName(pg);
@@ -170,7 +168,7 @@ public class PaymentService {
         }
 
         if(rate == 0) {
-            throw new LFException(ErrorMessages.CODE_3511);
+            throw new IllegalStateException(ErrorMessages.CODE_3511.getErrorMessage());
         }
 
         return pgPayMethod;
@@ -214,7 +212,7 @@ public class PaymentService {
         PgPayData pgPayData = pgPayDataRepository.findTopByMerchantUidOrderByPgPayDataIDDesc(orderId);
 
         if(lfPayData != null && pgPayData != null) {
-            throw new LFException(ErrorMessages.CODE_3606);
+            throw new IllegalStateException(ErrorMessages.CODE_3606.getErrorMessage());
         }
     }
 
@@ -265,11 +263,11 @@ public class PaymentService {
      */
     private void validateIamportBEAndWebData(Payment payment, String imp_uid, String merchant_uid, PrepareData prepareData) {
         if (!imp_uid.equals(payment.imp_uid())) {
-            throw new LFException(ErrorMessages.CODE_3601);
+            throw new IllegalStateException(ErrorMessages.CODE_3601.getErrorMessage());
         }
 
         if (!merchant_uid.equals(payment.merchant_uid())) {
-            throw new LFException(ErrorMessages.CODE_3601);
+            throw new IllegalStateException(ErrorMessages.CODE_3601.getErrorMessage());
         }
 
 //        if(payment.amount() != prepareData.amount()) {
@@ -287,7 +285,7 @@ public class PaymentService {
         List<LfPayData> lfPayData = lfPayDataRepository.findAllByOrderID(orderId);
 
         if (lfPayData.size() == 0) {
-            throw new LFException(ErrorMessages.CODE_3601);
+            throw new IllegalStateException(ErrorMessages.CODE_3601.getErrorMessage());
         } else {
             return lfPayData;
         }

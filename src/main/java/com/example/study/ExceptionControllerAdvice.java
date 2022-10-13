@@ -1,5 +1,6 @@
 package com.example.study;
 
+import com.example.study.api.payment.common.exception.LFException;
 import com.example.study.api.result.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +19,8 @@ class ExceptionControllerAdvice {
             NoSuchFieldException.class,
             IllegalStateException.class,
             IllegalArgumentException.class,
-            UnsupportedOperationException.class})
+            UnsupportedOperationException.class,
+            LFException.class})
     public Result<?> handle(Exception e) {
         LOGGER.error(e.getMessage(), e);
         return Result.failure(e.getMessage());
