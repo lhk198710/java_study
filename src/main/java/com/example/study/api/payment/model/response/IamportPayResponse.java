@@ -24,8 +24,8 @@ public record IamportPayResponse(String pg,
                                  String buyer_name){
 
 
-    public static IamportPayResponse makeIamportPayResponse(String pg, String pay_method, long amount, String orderId, String name) {
-        return new IamportPayResponse(pg, pay_method, false, orderId, name, amount, null, 0L, "KRW", "ko",
+    public static IamportPayResponse makeIamportPayResponse(String pg, String pay_method, long amount, long tax_free, String orderId, String name) {
+        return new IamportPayResponse(pg, pay_method, false, orderId, name, amount, null, tax_free, "KRW", "ko",
                 "http://localhost:18083/view/v1/payments/iamportRedirect",
                 "http://localhost:18083/api/v1/payments/notification",
                 false,

@@ -10,6 +10,7 @@ package com.example.study.api.payment.model.request;
 public record IamportPayRequest(String pay_method,
                                 String pg,
                                 long amount,
+                                long tax_free,
                                 String name,
                                 String orderId) {
 }

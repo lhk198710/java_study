@@ -110,7 +110,7 @@ public class PaymentService {
      * @return
      */
     private IamportPayResponse makeIamportPayResponse(String orderId, IamportPayRequest iamportPayRequest) {
-        return IamportPayResponse.makeIamportPayResponse(iamportPayRequest.pg(), iamportPayRequest.pay_method(), iamportPayRequest.amount(), orderId, iamportPayRequest.name());
+        return IamportPayResponse.makeIamportPayResponse(iamportPayRequest.pg(), iamportPayRequest.pay_method(), iamportPayRequest.amount(), iamportPayRequest.tax_free(), orderId, iamportPayRequest.name());
     }
 
     /**
